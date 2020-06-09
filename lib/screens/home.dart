@@ -7,6 +7,7 @@ import 'package:tarfoodlion/screens/signIn.dart';
 import 'package:tarfoodlion/screens/signup.dart';
 import 'package:tarfoodlion/utility/my_style.dart';
 import 'package:tarfoodlion/utility/normal_dialog.dart';
+import 'package:tarfoodlion/widget/show_card_shop.dart';
 //สร้างหน้าใหม่ทุกครั้ง stl fulwidget ลบcontainer ใส่ scafold
 
 class Home extends StatefulWidget {
@@ -50,8 +51,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('ยินต้อนรับ'),
+      ),
       drawer: showDrawer(),
+      body: ShowCardShop(),
     );
   }
 

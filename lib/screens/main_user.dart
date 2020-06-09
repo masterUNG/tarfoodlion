@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tarfoodlion/utility/my_style.dart';
 import 'package:tarfoodlion/utility/signout_process.dart';
+import 'package:tarfoodlion/widget/show_card_shop.dart';
 
 class MainUser extends StatefulWidget {
   @override
@@ -30,16 +31,28 @@ class _MainUserState extends State<MainUser> {
         child: ListView(
           children: <Widget>[
             showHead(),
+            signoutMenu(),
           ],
         ),
+      );
+
+  ListTile signoutMenu() => ListTile(
+        leading: Icon(Icons.exit_to_app),
+        title: Text('Sign Out'),
+        subtitle: Text('Sign Out และ กลับไปหาหน้าแรก'),
+        onTap: () => signOutProcess(context),
       );
 
   UserAccountsDrawerHeader showHead() {
     return UserAccountsDrawerHeader(
       decoration: MyStyle().myBoxDecoration('user.jpg'),
       currentAccountPicture: MyStyle().showLogo(),
-      accountName: Text('Name Login',style: TextStyle(color:Colors.black),),
-      accountEmail: Text('Login',style: TextStyle(color:MyStyle().primaryColor)),
+      accountName: Text(
+        'Name Login',
+        style: TextStyle(color: Colors.black),
+      ),
+      accountEmail:
+          Text('Login', style: TextStyle(color: MyStyle().primaryColor)),
     );
   }
 
@@ -55,6 +68,7 @@ class _MainUserState extends State<MainUser> {
         ],
       ),
       drawer: showDrawer(),
+      body: ShowCardShop(),
     );
   }
 }
