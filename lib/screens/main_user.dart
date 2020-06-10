@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tarfoodlion/screens/show_cart.dart';
 import 'package:tarfoodlion/utility/my_style.dart';
 import 'package:tarfoodlion/utility/signout_process.dart';
 import 'package:tarfoodlion/widget/show_card_shop.dart';
@@ -31,6 +32,7 @@ class _MainUserState extends State<MainUser> {
         child: ListView(
           children: <Widget>[
             showHead(),
+            showCartMenu(),
             signoutMenu(),
           ],
         ),
@@ -41,6 +43,18 @@ class _MainUserState extends State<MainUser> {
         title: Text('Sign Out'),
         subtitle: Text('Sign Out และ กลับไปหาหน้าแรก'),
         onTap: () => signOutProcess(context),
+      );
+
+
+      ListTile showCartMenu() => ListTile(
+        leading: Icon(Icons.shopping_cart),
+        title: Text('แสดงตระกล้า'),
+        subtitle: Text('แสดง รายการอาหาร ใน ตระกล้า'),
+        onTap: (){
+          Navigator.pop(context);
+          MaterialPageRoute route = MaterialPageRoute(builder: (context) => ShowCart(),);
+          Navigator.pushAndRemoveUntil(context, route, (route) => false);
+        },
       );
 
   UserAccountsDrawerHeader showHead() {
