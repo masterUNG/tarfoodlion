@@ -132,30 +132,38 @@ class _EditInfoShopState extends State<EditInfoShop> {
   }
 
   Future<Null> editThread() async {
-    Random random = Random();
-    int i = random.nextInt(100000);
-    String nameFile = 'editShop$i.jpg';
+    if (file != null) {
+      Random random = Random();
+      int i = random.nextInt(100000);
+      String nameFile = 'editShop$i.jpg';
 
-    Map<String, dynamic> map = Map();
-    map['file'] = await MultipartFile.fromFile(file.path, filename: nameFile);
-    FormData formData = FormData.fromMap(map);
-    String urlUpload = '${MyConstant().domain}/tarfood/saveShop.php';
-    await Dio().post(urlUpload, data: formData).then((value) async {
-      urlPicture = '/tarfood/Shop/$nameFile';
+      Map<String, dynamic> map = Map();
+      map['file'] = await MultipartFile.fromFile(file.path, filename: nameFile);
+      FormData formData = FormData.fromMap(map);
+      String urlUpload = '${MyConstant().domain}/tarfood/saveShop.php';
+      await Dio().post(urlUpload, data: formData).then((value) async {
+        urlPicture = '/tarfood/Shop/$nameFile';
 
-      String id = userModel.id;
-      // print('id = $id');
+        await editValueMySQL();
+      });
+    } else {
+      editValueMySQL();
+    }
+  }
 
-      String url =
-          '${MyConstant().domain}/tarfood/editUserWhereId.php?isAdd=true&id=$id&NameShop=$nameShop&Address=$address&Phone=$phone&UrlPicture=$urlPicture&Lat=$lat&Lng=$lng';
+  Future editValueMySQL() async {
+    String id = userModel.id;
+    // print('id = $id');
 
-      Response response = await Dio().get(url);
-      if (response.toString() == 'true') {
-        Navigator.pop(context);
-      } else {
-        normalDialog(context, 'ไม่สามารถอัพเดทไม่ได้ กรุณาลองใหม่');
-      }
-    });
+    String url =
+        '${MyConstant().domain}/tarfood/editUserWhereId.php?isAdd=true&id=$id&NameShop=$nameShop&Address=$address&Phone=$phone&UrlPicture=$urlPicture&Lat=$lat&Lng=$lng';
+
+    Response response = await Dio().get(url);
+    if (response.toString() == 'true') {
+      Navigator.pop(context);
+    } else {
+      normalDialog(context, 'ไม่สามารถอัพเดทไม่ได้ กรุณาลองใหม่');
+    }
   }
 
   Set<Marker> currentMarker() {
